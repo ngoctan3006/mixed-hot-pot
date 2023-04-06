@@ -1,0 +1,22 @@
+{
+  "name": "get-data",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:ngoctan3006/mixed-hot-pot.git",
+  "author": "Tan",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start:dev": "nodemon",
+    "start": "node index.js",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
+  },
+  "dependencies": {
+    "axios": "^1.3.5",
+    "fs": "^0.0.1-security"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22",
+    "prettier": "^2.8.7"
+  }
+}
