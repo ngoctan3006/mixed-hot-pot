@@ -2,6 +2,7 @@ import { Box, Grid, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { SelectInput } from './';
 import { SubmitButton, Title } from './styled';
+import { RotateLeft } from '@mui/icons-material';
 
 const SelectAddress = ({ data }) => {
   const [provinceList, setProvinceList] = useState([]);
@@ -60,6 +61,15 @@ const SelectAddress = ({ data }) => {
         province.name
       }`,
     );
+  };
+
+  const handleReset = () => {
+    setSelectedProvince('');
+    setSelectedDistrict('');
+    setSelectedWard('');
+    setStreet('');
+    setResult('');
+    setFormError({});
   };
 
   useEffect(() => {
@@ -159,7 +169,7 @@ const SelectAddress = ({ data }) => {
         <Grid
           item
           xs={3}
-          sx={{ mx: 'auto', display: 'flex', justifyContent: 'center', mt: 2 }}
+          sx={{ ml: 'auto', display: 'flex', justifyContent: 'center', mt: 2 }}
         >
           <SubmitButton
             variant="contained"
@@ -168,6 +178,21 @@ const SelectAddress = ({ data }) => {
             onClick={handleSubmit}
           >
             Xác nhận
+          </SubmitButton>
+        </Grid>
+        <Grid
+          item
+          xs={3}
+          sx={{ mr: 'auto', display: 'flex', justifyContent: 'center', mt: 2 }}
+        >
+          <SubmitButton
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={handleReset}
+            startIcon={<RotateLeft />}
+          >
+            Reset
           </SubmitButton>
         </Grid>
 
