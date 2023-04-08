@@ -31,7 +31,7 @@ const SelectInput = ({
         >
           {data.map((item) => (
             <MenuItem key={item.code} value={item.code}>
-              {item.name}
+              {`${item.type} ${item.name}`}
             </MenuItem>
           ))}
         </Select>

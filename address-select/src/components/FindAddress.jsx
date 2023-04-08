@@ -48,7 +48,9 @@ const FindAddress = ({ data }) => {
             ward.lower.includes(searchValue) ||
             ward.key.includes(searchValue)
           ) {
-            temp.push(`${ward.name}, ${district.name}, ${province.name}`);
+            temp.push(
+              `${ward.type} ${ward.name}, ${district.type} ${district.name}, ${province.type} ${province.name}`,
+            );
           }
         });
       });

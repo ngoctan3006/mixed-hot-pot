@@ -57,9 +57,9 @@ const SelectAddress = ({ data }) => {
     );
     const ward = wardList.find((item) => item.code === selectedWard);
     setResult(
-      `${street ? street + ', ' : ''}${ward.name}, ${district.name}, ${
-        province.name
-      }`,
+      `${street ? street + ', ' : ''}${ward.type} ${ward.name}, ${
+        district.type
+      } ${district.name}, ${province.type} ${province.name}`,
     );
   };
 
@@ -76,7 +76,7 @@ const SelectAddress = ({ data }) => {
     const provinces = data.map((item) => ({
       code: item.code,
       name: item.name,
-      division_type: item.division_type,
+      type: item.type,
       lower: item.lower,
       key: item.key,
     }));
@@ -90,7 +90,7 @@ const SelectAddress = ({ data }) => {
       const districtList = districts.districts.map((item) => ({
         code: item.code,
         name: item.name,
-        division_type: item.division_type,
+        type: item.type,
         lower: item.lower,
         key: item.key,
       }));
@@ -110,7 +110,7 @@ const SelectAddress = ({ data }) => {
           wards.wards.map((item) => ({
             code: item.code,
             name: item.name,
-            division_type: item.division_type,
+            type: item.type,
             lower: item.lower,
             key: item.key,
           })),
