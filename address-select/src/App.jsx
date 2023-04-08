@@ -21,7 +21,7 @@ const App = () => {
         </CustomBox>
         <Divider />
         <CustomBox>
-          <FindAddress />
+          <FindAddress data={data} />
         </CustomBox>
       </Stack>
     </Container>
