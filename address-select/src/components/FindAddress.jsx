@@ -82,6 +82,9 @@ const FindAddress = ({ data }) => {
           }}
           onChange={(e) => setSearch(e.target.value)}
           value={search}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') handleSearch();
+          }}
         />
         <Box sx={{ mt: 3, display: 'flex' }}>
           <SubmitButton
