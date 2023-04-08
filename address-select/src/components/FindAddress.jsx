@@ -1,5 +1,6 @@
 import { RotateLeft, Search } from '@mui/icons-material';
 import {
+  Alert,
   Box,
   CircularProgress,
   InputAdornment,
@@ -7,7 +8,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { SubmitButton, Title } from './styled';
 
 const FindAddress = ({ data }) => {
@@ -53,7 +54,8 @@ const FindAddress = ({ data }) => {
       });
     });
 
-    setResult(temp);
+    if (temp.length === 0) setResult('Không tìm thấy kết quả nào');
+    else setResult(temp);
     setLoading(false);
   };
 
@@ -115,22 +117,28 @@ const FindAddress = ({ data }) => {
             Reset
           </SubmitButton>
         </Box>
-        {result.length > 0 && (
-          <Stack mt={4} direction="row">
-            <Title
-              sx={{ mb: 0, mr: 1, fontSize: 16, fontWeight: 700 }}
-              variant="h6"
-            >
-              Kết quả tìm kiếm:
-            </Title>
-            <Stack>
-              {result.map((item, index) => (
-                <Typography key={index} variant="body1">
-                  {item}
-                </Typography>
-              ))}
+        {typeof result === 'string' ? (
+          <Alert severity="error" sx={{ mt: 4, fontWeight: 'bold' }}>
+            {result}
+          </Alert>
+        ) : (
+          result.length > 0 && (
+            <Stack mt={4} direction="row">
+              <Title
+                sx={{ mb: 0, mr: 1, fontSize: 16, fontWeight: 700 }}
+                variant="h6"
+              >
+                Kết quả tìm kiếm:
+              </Title>
+              <Stack>
+                {result.map((item, index) => (
+                  <Typography key={index} variant="body1">
+                    {item}
+                  </Typography>
+                ))}
+              </Stack>
             </Stack>
-          </Stack>
+          )
         )}
       </Stack>
     </Box>
