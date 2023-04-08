@@ -1,4 +1,4 @@
-import { Search } from '@mui/icons-material';
+import { RotateLeft, Search } from '@mui/icons-material';
 import {
   Box,
   CircularProgress,
@@ -8,7 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Title } from './styled';
+import { SubmitButton, Title } from './styled';
 
 const FindAddress = ({ data }) => {
   const [search, setSearch] = useState('');
@@ -57,9 +57,10 @@ const FindAddress = ({ data }) => {
     setLoading(false);
   };
 
-  useEffect(() => {
-    handleSearch();
-  }, [search]);
+  const handleReset = () => {
+    setSearch('');
+    setResult([]);
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -82,6 +83,35 @@ const FindAddress = ({ data }) => {
           onChange={(e) => setSearch(e.target.value)}
           value={search}
         />
+        <Box sx={{ mt: 3, display: 'flex' }}>
+          <SubmitButton
+            variant="contained"
+            color="secondary"
+            size="large"
+            onClick={handleSearch}
+            startIcon={<Search />}
+            disabled={search.trim().length === 0}
+            sx={{
+              ml: 'auto',
+              '&:disabled': {
+                cursor: 'not-allowed',
+                pointerEvents: 'all !important',
+              },
+            }}
+          >
+            Tìm kiếm
+          </SubmitButton>
+          <SubmitButton
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={handleReset}
+            sx={{ mr: 'auto', ml: 3 }}
+            startIcon={<RotateLeft />}
+          >
+            Reset
+          </SubmitButton>
+        </Box>
         {result.length > 0 && (
           <Stack mt={4} direction="row">
             <Title
