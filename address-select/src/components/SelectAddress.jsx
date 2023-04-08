@@ -1,6 +1,6 @@
 import { Box, Grid, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import SelectInput from './SelectInput';
+import { SelectInput } from './';
 import { SubmitButton, Title } from './styled';
 
 const SelectAddress = ({ data }) => {
