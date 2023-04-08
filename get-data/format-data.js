@@ -2,65 +2,82 @@ import fs from 'fs';
 import removeAccents from './removeAccents.js';
 const rawData = JSON.parse(fs.readFileSync('raw-data.json'));
 
-// console.log(rawData.length);
-// console.log(removeAccents(rawData[0].name));
+const getName = (name, count = 1) => name.split(' ').slice(count).join(' ');
 
-// console.log('thanh_pho_ha_noi'.replace(/_/g, ' '));
-// console.log('Thành phố Hà Nội'.toLowerCase());
+const getType = (type, count = 1) =>
+  type.split(' ').slice(0, count).join(' ').charAt(0).toUpperCase() +
+  type.split(' ').slice(0, count).join(' ').slice(1);
 
-const formatData = rawData.map((province) => ({
-  code: province.code,
-  name: province.name,
-  division_type: province.division_type,
-  lower: removeAccents(province.name).toLowerCase(),
-  key: province.codename.replace(/_/g, ' ').includes('thanh pho')
-    ? province.codename
-        .split('_')
-        .map((item) => item[0])
-        .join('')
-        .substring(2)
-    : province.codename
-        .split('_')
-        .map((item) => item[0])
-        .join('')
-        .substring(1),
-  districts: province.districts.map((district) => ({
-    code: district.code,
-    name: district.name,
-    division_type: district.division_type,
-    lower: removeAccents(district.name).toLowerCase(),
-    key:
-      district.codename.replace(/_/g, ' ').includes('thanh pho') ||
-      district.codename.replace(/_/g, ' ').includes('thi xa')
-        ? district.codename
-            .split('_')
-            .map((item) => item[0])
-            .join('')
-            .substring(2)
-        : district.codename
-            .split('_')
-            .map((item) => item[0])
-            .join('')
-            .substring(1),
-    wards: district.wards.map((ward) => ({
-      code: ward.code,
-      name: ward.name,
-      division_type: ward.division_type,
-      lower: removeAccents(ward.name).toLowerCase(),
-      key: ward.codename.replace(/_/g, ' ').includes('thi tran')
-        ? ward.codename
-            .split('_')
-            .map((item) => item[0])
-            .join('')
-            .substring(2)
-        : ward.codename
-            .split('_')
-            .map((item) => item[0])
-            .join('')
-            .substring(1),
-    })),
-  })),
-}));
+const getKey = (name, count = 1) =>
+  name
+    .split('_')
+    .slice(count)
+    .map((item) => item[0])
+    .join('');
+
+const formatData = rawData.map((province) => {
+  let name, type, key;
+  if (province.codename.includes('thanh_pho')) {
+    name = getName(province.name, 2);
+    type = getType(province.division_type, 2);
+    key = getKey(province.codename, 2);
+  } else {
+    name = getName(province.name);
+    type = getType(province.division_type);
+    key = getKey(province.codename);
+  }
+
+  return {
+    code: province.code,
+    name,
+    type,
+    lower: removeAccents(name).toLowerCase(),
+    key,
+    districts: province.districts.map((district) => {
+      let name, type, key;
+      if (
+        district.codename.includes('thanh_pho') ||
+        district.codename.includes('thi_xa')
+      ) {
+        name = getName(district.name, 2);
+        type = getType(district.division_type, 2);
+        key = getKey(district.codename, 2);
+      } else {
+        name = getName(district.name);
+        type = getType(district.division_type);
+        key = getKey(district.codename);
+      }
+
+      return {
+        code: district.code,
+        name,
+        type,
+        lower: removeAccents(name).toLowerCase(),
+        key,
+        wards: district.wards.map((ward) => {
+          let name, type, key;
+          if (ward.codename.includes('thi_tran')) {
+            name = getName(ward.name, 2);
+            type = getType(ward.division_type, 2);
+            key = getKey(ward.codename, 2);
+          } else {
+            name = getName(ward.name);
+            type = getType(ward.division_type);
+            key = getKey(ward.codename);
+          }
+
+          return {
+            code: ward.code,
+            name,
+            type,
+            lower: removeAccents(name).toLowerCase(),
+            key,
+          };
+        }),
+      };
+    }),
+  };
+});
 
 fs.writeFile('data.json', JSON.stringify(formatData), (err) => {
   if (err) throw err;
