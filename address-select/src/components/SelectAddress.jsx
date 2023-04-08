@@ -3,8 +3,7 @@ import React, { useEffect, useState } from 'react';
 import SelectInput from './SelectInput';
 import { SubmitButton, Title } from './styled';
 
-const SelectAddress = () => {
-  const [data, setData] = useState([]);
+const SelectAddress = ({ data }) => {
   const [provinceList, setProvinceList] = useState([]);
   const [districtList, setDistrictList] = useState([]);
   const [wardList, setWardList] = useState([]);
@@ -62,13 +61,6 @@ const SelectAddress = () => {
       }`,
     );
   };
-
-  useEffect(() => {
-    fetch('src/assets/data.json')
-      .then((res) => res.json())
-      .then((data) => setData(data))
-      .catch((err) => console.log(err));
-  }, []);
 
   useEffect(() => {
     const provinces = data.map((item) => ({
