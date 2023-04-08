@@ -32,7 +32,7 @@ const FindAddress = ({ data }) => {
         province.lower.includes(searchValue) ||
         province.key.includes(searchValue)
       ) {
-        temp.push(province.name);
+        temp.push(`${province.type} ${province.name}`);
       }
       province.districts.forEach((district) => {
         if (
@@ -40,7 +40,9 @@ const FindAddress = ({ data }) => {
           district.lower.includes(searchValue) ||
           district.key.includes(searchValue)
         ) {
-          temp.push(`${district.name}, ${province.name}`);
+          temp.push(
+            `${district.type} ${district.name}, ${province.type} ${province.name}`,
+          );
         }
         district.wards.forEach((ward) => {
           if (
